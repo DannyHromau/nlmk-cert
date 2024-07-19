@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Daniil Hromau" id="2023-11-10-2">
+    <changeSet author="Daniil Hromau" id="2024-07-18-1">
 
         <!--Пользователи-->
         <createTable tableName="users" remarks="Пользователи">

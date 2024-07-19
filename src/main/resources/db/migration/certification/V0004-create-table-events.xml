@@ -1,0 +1,29 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Daniil Hromau" id="2024-07-19-2">
+
+        <!--События-->
+        <createTable tableName="events" remarks="События">
+            <column name="eventId" type="uuid" remarks="ID записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="statusId" type="uuid" remarks="Идентификатор статуса в справочнике.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="certId" type="uuid" remarks="Идентификатор сертификата.">
+                <constraints foreignKeyName="fk_events_quality_certificate" referencedTableName="quality_certificate" referencedColumnNames="certId" nullable="false"/>
+            </column>
+            <column name="dateBeginEvent" type="timestamp with time zone" remarks="Дата начала события.">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dateEndEvent" type="timestamp with time zone" remarks="Дата конца события.">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

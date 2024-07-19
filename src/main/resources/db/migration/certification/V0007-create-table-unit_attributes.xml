@@ -1,0 +1,35 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Daniil Hromau" id="2024-07-19-5">
+
+        <!--Атрибуты-->
+        <createTable tableName="group_attributes" remarks="Атрибуты">
+            <column name="attrId" type="uuid" remarks="ID записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="attributesSetId" type="uuid" remarks="Идентификатор набора атрибутов.">
+                <constraints foreignKeyName="fk_unit_attributes_group_attributes" referencedTableName="group_attributes" referencedColumnNames="attributesSetId" nullable="false"/>
+            </column>
+            <column name="attrCode" type="uuid" remarks="Код атрибута.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="measureId" type="uuid" remarks="Идентификатор единицы измерения.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="certId" type="uuid" remarks="Идентификатор сертификата.">
+                <constraints foreignKeyName="fk_unit_attributes_quality_certificate" referencedTableName="quality_certificate" referencedColumnNames="certId" nullable="false"/>
+            </column>
+            <column name="metalUnitId" type="uuid" remarks="Идентификатор единицы металла в сертификате.">
+                <constraints foreignKeyName="fk_unit_attributes_unit_certificate" referencedTableName="unit_certificate" referencedColumnNames="metalUnitId" nullable="false"/>
+            </column>
+            <column name="attrValue" type="varchar(255)" remarks="Значение атрибута.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

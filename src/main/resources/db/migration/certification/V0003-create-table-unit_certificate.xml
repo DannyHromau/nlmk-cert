@@ -1,0 +1,50 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Daniil Hromau" id="2024-07-19-1">
+
+        <!--Единица продукции в сертификате-->
+        <createTable tableName="unit_certificate" remarks="Единица продукции в сертификате">
+            <column name="metalUnitId" type="UUID" remarks="ID записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="certId" type="UUID" remarks="Идентификатор сертификата">
+                <constraints foreignKeyName="fk_unit_certificate_quality_certificate" referencedTableName="quality_certificate" referencedColumnNames="certId"/>
+            </column>
+            <column name="heat" type="INTEGER" remarks="Номер плавки.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="heat_year" type="INTEGER" remarks="Год плавки.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="strand" type="INTEGER" remarks="Номер УНРС.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="slab" type="INTEGER" remarks="Номер сляба.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hnum" type="INTEGER" remarks="Номер горячекатанной партии.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hnumYear" type="INTEGER" remarks="Год горячекатанной партии.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roll" type="INTEGER" remarks="Номер рулона.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bundle" type="INTEGER" remarks="Номер пачки/бунта.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tnum" type="INTEGER" remarks="Номер холоднокатанной партии.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tnumYear" type="INTEGER" remarks="Год холоднокатанной партии.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

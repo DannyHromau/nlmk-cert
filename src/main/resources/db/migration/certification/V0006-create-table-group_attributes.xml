@@ -1,0 +1,23 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Daniil Hromau" id="2024-07-19-4">
+
+        <!--Набор характеристик-->
+        <createTable tableName="group_attributes" remarks="Набор характеристик">
+            <column name="attributesSetId" type="uuid" remarks="ID записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="groupId" type="uuid" remarks="Тип группы харакетристик.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parentAttributesSetId" type="uuid" remarks="Идентификатор родительского набора.">
+                <constraints foreignKeyName="fk_group_attributes_parent" referencedTableName="group_attributes" referencedColumnNames="attributesSetId" nullable="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
