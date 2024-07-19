@@ -1,0 +1,35 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Daniil Hromau" id="2023-11-10-2">
+
+        <!--Пользователи-->
+        <createTable tableName="users" remarks="Пользователи">
+            <column name="userId" type="UUID" remarks="ID записи">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="authorizationUserId" type="UUID" remarks="Идентификатор пользователя из сервиса авторизации (sub)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="userName" type="VARCHAR(255)" remarks="Имя пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postId" type="UUID" remarks="Идентификатор должности пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)" remarks="Имя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(255)" remarks="Фамилия">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middleName" type="VARCHAR(255)" remarks="Отчество">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,1 @@
+truncate nsi_unit_attribute, nsi_place, nsi_warehouse_unit_status, nsi_unit_required_attribute_group, nsi_required_attribute, nsi_warehouse_object_model, nsi_operation_type cascade;

@@ -1,0 +1,80 @@
+server:
+  servlet:
+    context-path: /api/nlmk-mes-certification
+  port: 8080
+  innerApiPort: 8081
+  max-http-header-size: 10KB
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nlmk-mes-certification
+    username: nlmk-mes-certification
+    password: nlmk-mes-certification
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    properties:
+      hibernate:
+        criteria:
+          literal_handling_mode: bind
+        query:
+          in_clause_parameter_padding: true
+        jdbc:
+          fetch_size: 500
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+
+  liquibase:
+    change-log: db/migration/liquibase-changeLog.xml
+    contexts: ${spring.profiles.active}
+  mvc:
+    format:
+      date-time: yyyy-MM-dd'T'HH:mm:ss.SSSz
+      date: yyyy-MM-dd
+  cache:
+    caffeine:
+      spec: expireAfterWrite=3600s
+
+management:
+  server:
+    port: 8090
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health, info, prometheus, loggers
+
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            percentiles: 0.95
+
+application:
+  system:
+    code: 65
+  workshop:
+    id: 12
+    code: nlmk.pp.cgp
+  werks:
+    code: 1011
+    name: "ПАО НЛМК"
+  authRoles: nlmk.rm.cgp@certification_write
+  authRolesViewer: nlmk.rm.cgp@certification_read
+  cors:
+    allowed-origins: http://localhost:3000
+  source-time-zone: Europe/Moscow
+
+keycloak:
+  auth-server-url: https://sso-test.dp.nlmk.com/auth
+  realm: mes-rolling-dev
+  resource: mes-rolling-certification-dev
+  bearer-only: true
+
+springdoc:
+  api-docs:
+    enabled: true
+

@@ -1,0 +1,1182 @@
+{
+    "type": "record",
+    "name": "CdcObjectModelVer0",
+    "namespace": "nlmk.l3.nsi.zifra",
+    "doc": "Объекты ресурсных моделей",
+    "fields": [
+        {
+            "name": "ts",
+            "type": "string",
+            "doc": "Дата и время передачи"
+        },
+        {
+            "name": "op",
+            "type": {
+                "type": "enum",
+                "name": "EnumOp",
+                "namespace": "nlmk",
+                "symbols": [
+                    "I",
+                    "U",
+                    "D"
+                ]
+            },
+            "doc": "Операция"
+        },
+        {
+            "name": "pk",
+            "type": {
+                "type": "record",
+                "name": "PkType",
+                "namespace": "nlmk.l3.nsi.zifra.cdc.object.model.ver0",
+                "fields": [
+                    {
+                        "name": "systemCode",
+                        "type": "string",
+                        "doc": "Код системы-отправителя"
+                    },
+                    {
+                        "name": "id",
+                        "type": "string",
+                        "doc": "Идентификатор объекта"
+                    }
+                ]
+            },
+            "doc": "Первичный ключ"
+        },
+        {
+            "name": "sys",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "Sys",
+                    "namespace": "nlmk",
+                    "fields": [
+                        {
+                            "name": "seqID",
+                            "type": "long",
+                            "doc": "Монотонно возрастающий счетчик для проверки или восстановления оригинальной последовательности",
+                            "default": -1
+                        },
+                        {
+                            "name": "traceID",
+                            "type": "string",
+                            "doc": "Сквозной Trace ID (обычно UUID)",
+                            "default": ""
+                        }
+                    ]
+                }
+            ],
+            "doc": "Системные поля, заполняемые источником",
+            "default": null
+        },
+        {
+            "name": "metadata",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "Metadata",
+                    "namespace": "nlmk",
+                    "fields": [
+                        {
+                            "name": "kafkaKeySchemaID",
+                            "type": "int",
+                            "doc": "Версия схемы ключа",
+                            "default": -1
+                        },
+                        {
+                            "name": "kafkaValueSchemaID",
+                            "type": "int",
+                            "doc": "Версия схемы значения",
+                            "default": -1
+                        },
+                        {
+                            "name": "kafkaKey",
+                            "type": "string",
+                            "doc": "Ключ в Kafka",
+                            "default": ""
+                        },
+                        {
+                            "name": "kafkaPartition",
+                            "type": "int",
+                            "doc": "Номер партиции",
+                            "default": -1
+                        },
+                        {
+                            "name": "kafkaOffset",
+                            "type": "long",
+                            "doc": "Offset в Kafka",
+                            "default": -1
+                        },
+                        {
+                            "name": "kafkaTimestamp",
+                            "type": "string",
+                            "doc": "Время сообщения в Kafka",
+                            "default": ""
+                        },
+                        {
+                            "name": "kafkaTopic",
+                            "type": "string",
+                            "doc": "Имя топика",
+                            "default": ""
+                        },
+                        {
+                            "name": "kafkaHeaders",
+                            "type": [
+                                "null",
+                                {
+                                    "type": "map",
+                                    "values": "string"
+                                }
+                            ],
+                            "doc": "kafkaHeaders",
+                            "default": null
+                        }
+                    ]
+                }
+            ],
+            "doc": "Мета структура, заполняется Подписчиком после чтения",
+            "default": null
+        },
+        {
+            "name": "data",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "RecordData",
+                    "namespace": "nlmk.l3.nsi.zifra.cdc.object.model.ver0",
+                    "fields": [
+                        {
+                            "name": "modelId",
+                            "type": "string",
+                            "doc": "Идентификатор объектной модели"
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "doc": "Наименование объекта"
+                        },
+                        {
+                            "name": "description",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "doc": "Описание объекта",
+                            "default": null
+                        },
+                        {
+                            "name": "parentId",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "doc": "Идентификатор родительского объекта",
+                            "default": null
+                        },
+                        {
+                            "name": "objectPrototypeId",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "doc": "Идентификатор прототипа объекта",
+                            "default": null
+                        },
+                        {
+                            "name": "properties",
+                            "type": [
+                                "null",
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "record",
+                                        "name": "RecordProperties",
+                                        "fields": [
+                                            {
+                                                "name": "id",
+                                                "type": "string",
+                                                "doc": "Идентификатор свойства"
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": "string",
+                                                "doc": "Наименование свойства"
+                                            },
+                                            {
+                                                "name": "description",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Описание свойства",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "measureId",
+                                                "type": "string",
+                                                "doc": "Идентификатор единицы измерения"
+                                            },
+                                            {
+                                                "name": "dataTypePhysical",
+                                                "type": {
+                                                    "type": "enum",
+                                                    "name": "EnumDataTypePhysical",
+                                                    "symbols": [
+                                                        "Boolean",
+                                                        "Decimal",
+                                                        "Double",
+                                                        "Guid",
+                                                        "Integer",
+                                                        "Long",
+                                                        "String",
+                                                        "DateTime",
+                                                        "DirectoryItem"
+                                                    ]
+                                                },
+                                                "doc": "Физический тип данных"
+                                            },
+                                            {
+                                                "name": "dataTypeLogical",
+                                                "type": {
+                                                    "type": "enum",
+                                                    "name": "EnumDataTypeLogical",
+                                                    "symbols": [
+                                                        "DateTime",
+                                                        "Numeric",
+                                                        "Text",
+                                                        "Code",
+                                                        "Measure",
+                                                        "Quantity",
+                                                        "Amount",
+                                                        "BinaryObject",
+                                                        "DigitalSet",
+                                                        "Indentifier",
+                                                        "Indicator"
+                                                    ]
+                                                },
+                                                "doc": "Логический тип данных"
+                                            },
+                                            {
+                                                "name": "sourceType",
+                                                "type": [
+                                                    "null",
+                                                    {
+                                                        "type": "enum",
+                                                        "name": "EnumSourceType",
+                                                        "symbols": [
+                                                            "trendLink",
+                                                            "const",
+                                                            "formula",
+                                                            "querySQL",
+                                                            "catalog",
+                                                            "catalogArray"
+                                                        ]
+                                                    }
+                                                ],
+                                                "doc": "Тип источника данных",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "source",
+                                                "type": [
+                                                    "null",
+                                                    {
+                                                        "type": "record",
+                                                        "name": "RecordSource",
+                                                        "fields": [
+                                                            {
+                                                                "name": "formula",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceFormula",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": {
+                                                                                    "type": "record",
+                                                                                    "name": "RecordDataPropertiesSourceFormulaConfiguration",
+                                                                                    "fields": [
+                                                                                        {
+                                                                                            "name": "value",
+                                                                                            "type": "string",
+                                                                                            "doc": "Значение формулы"
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "variables",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                {
+                                                                                                    "type": "array",
+                                                                                                    "items": {
+                                                                                                        "type": "record",
+                                                                                                        "name": "RecordVariables",
+                                                                                                        "fields": [
+                                                                                                            {
+                                                                                                                "name": "name",
+                                                                                                                "type": "string",
+                                                                                                                "doc": "Наименование переменной"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "type",
+                                                                                                                "type": {
+                                                                                                                    "type": "enum",
+                                                                                                                    "name": "EnumDataPropertiesSourceFormulaConfigurationVariablesType",
+                                                                                                                    "symbols": [
+                                                                                                                        "trendLink",
+                                                                                                                        "const",
+                                                                                                                        "propertyId"
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                "doc": "Тип переменной"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "value",
+                                                                                                                "type": "string",
+                                                                                                                "doc": "Значение переменной"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "signTrigger",
+                                                                                                                "type": [
+                                                                                                                    "null",
+                                                                                                                    "string"
+                                                                                                                ],
+                                                                                                                "doc": "Признак запуска по триггеру",
+                                                                                                                "default": null
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ],
+                                                                                            "doc": "Переменные формул",
+                                                                                            "default": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "calcType",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                {
+                                                                                                    "type": "enum",
+                                                                                                    "name": "EnumCalcType",
+                                                                                                    "symbols": [
+                                                                                                        "mvelExpression",
+                                                                                                        "externalServices"
+                                                                                                    ]
+                                                                                                }
+                                                                                            ],
+                                                                                            "doc": "Тип расчета",
+                                                                                            "default": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "trendLink",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                "string"
+                                                                                            ],
+                                                                                            "doc": "Запись в тег",
+                                                                                            "default": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "triggerType",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                {
+                                                                                                    "type": "enum",
+                                                                                                    "name": "EnumTriggerType",
+                                                                                                    "symbols": [
+                                                                                                        "ListenData",
+                                                                                                        "ByTrigger",
+                                                                                                        "Periodic",
+                                                                                                        "OnDemand"
+                                                                                                    ]
+                                                                                                }
+                                                                                            ],
+                                                                                            "doc": "Тип запуска",
+                                                                                            "default": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "periodInSeconds",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                "int"
+                                                                                            ],
+                                                                                            "doc": "Период расчета в секундах",
+                                                                                            "default": null
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "offsetInSeconds",
+                                                                                            "type": [
+                                                                                                "null",
+                                                                                                "int"
+                                                                                            ],
+                                                                                            "doc": "Сдвиг в секундах",
+                                                                                            "default": null
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "doc": "Конфигурация свойства с источником Формула"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Формула",
+                                                                "default": null
+                                                            },
+                                                            {
+                                                                "name": "trendLink",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceTrendLink",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceTrendLinkConfiguration",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "trendLink",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Источник - тег БДВР",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Кофигурация источника Тег БДВР",
+                                                                                "default": null
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Структура источника Тег БДВР",
+                                                                "default": null
+                                                            },
+                                                            {
+                                                                "name": "const",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceConst",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceConstConfiguration",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "const",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Константа",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Конфигурация источника Константа",
+                                                                                "default": null
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Структура источника Константа",
+                                                                "default": null
+                                                            },
+                                                            {
+                                                                "name": "querySQL",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceQuerySQL",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceQuerySQLConfiguration",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "querySQL",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "SQL-запрос",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Конфигурация источника SQL запрос",
+                                                                                "default": null
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Структура источника SQL-запрос",
+                                                                "default": null
+                                                            },
+                                                            {
+                                                                "name": "catalog",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceCatalog",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "catalogId",
+                                                                                "type": "string",
+                                                                                "doc": "Идентификатор справочника"
+                                                                            },
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceCatalogConfiguration",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "attrId",
+                                                                                                "type": "string",
+                                                                                                "doc": "Идентификатор поля из справочника"
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "defaultValue",
+                                                                                                "type": "string",
+                                                                                                "doc": "Значение по умолчанию"
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "logicalOperator",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Логический оператор. Всегда = AND",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "filterGroups",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    {
+                                                                                                        "type": "array",
+                                                                                                        "items": {
+                                                                                                            "type": "record",
+                                                                                                            "name": "RecordDataPropertiesSourceCatalogConfigurationFilterGroups",
+                                                                                                            "fields": [
+                                                                                                                {
+                                                                                                                    "name": "filters",
+                                                                                                                    "type": [
+                                                                                                                        "null",
+                                                                                                                        {
+                                                                                                                            "type": "array",
+                                                                                                                            "items": {
+                                                                                                                                "type": "record",
+                                                                                                                                "name": "RecordDataPropertiesSourceCatalogConfigurationFilterGroupsFilters",
+                                                                                                                                "fields": [
+                                                                                                                                    {
+                                                                                                                                        "name": "attrId",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Идентификатор поля",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "name",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Алиас переменной",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "comparison",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            {
+                                                                                                                                                "type": "enum",
+                                                                                                                                                "name": "EnumDataPropertiesSourceCatalogConfigurationFilterGroupsFiltersComparison",
+                                                                                                                                                "symbols": [
+                                                                                                                                                    "EQUAL",
+                                                                                                                                                    "LESS",
+                                                                                                                                                    "MOREOREQUAL",
+                                                                                                                                                    "MORE",
+                                                                                                                                                    "LESSOREQUAL"
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Условие сравнения",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "type",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            {
+                                                                                                                                                "type": "enum",
+                                                                                                                                                "name": "EnumDataPropertiesSourceCatalogConfigurationFilterGroupsFiltersType",
+                                                                                                                                                "symbols": [
+                                                                                                                                                    "const",
+                                                                                                                                                    "propertyId"
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Тип значения",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "value",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Значение условия",
+                                                                                                                                        "default": null
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ],
+                                                                                                                    "doc": "Группа фильтрации",
+                                                                                                                    "default": null
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "name": "logicalOperator",
+                                                                                                                    "type": [
+                                                                                                                        "null",
+                                                                                                                        "string"
+                                                                                                                    ],
+                                                                                                                    "doc": "Логический оператор. Всегда = OR",
+                                                                                                                    "default": null
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "doc": "Условия фильтрации",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "sorting",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    {
+                                                                                                        "type": "record",
+                                                                                                        "name": "RecordDataPropertiesSourceCatalogConfigurationSorting",
+                                                                                                        "fields": [
+                                                                                                            {
+                                                                                                                "name": "direction",
+                                                                                                                "type": [
+                                                                                                                    "null",
+                                                                                                                    {
+                                                                                                                        "type": "enum",
+                                                                                                                        "name": "EnumDataPropertiesSourceCatalogConfigurationSortingDirection",
+                                                                                                                        "symbols": [
+                                                                                                                            "ASC",
+                                                                                                                            "DESC"
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ],
+                                                                                                                "doc": "Направление сортировки",
+                                                                                                                "default": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "attrId",
+                                                                                                                "type": [
+                                                                                                                    "null",
+                                                                                                                    "string"
+                                                                                                                ],
+                                                                                                                "doc": "Идентификатор поля для сортировки",
+                                                                                                                "default": null
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ],
+                                                                                                "doc": "Сортировка",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Конфигурация источника Поиск по справочнику",
+                                                                                "default": null
+                                                                            },
+                                                                            {
+                                                                                "name": "result",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceCatalogResult",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "lineId",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Идентификатор строки справочника",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "value",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Значение",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "attrId",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Идентификатор поля справочника",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Результаты вычислений",
+                                                                                "default": null
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Поиск по справочнику",
+                                                                "default": null
+                                                            },
+                                                            {
+                                                                "name": "catalogArray",
+                                                                "type": [
+                                                                    "null",
+                                                                    {
+                                                                        "type": "record",
+                                                                        "name": "RecordDataPropertiesSourceCatalogArray",
+                                                                        "fields": [
+                                                                            {
+                                                                                "name": "catalogId",
+                                                                                "type": "string",
+                                                                                "doc": "Идентификатор справочника"
+                                                                            },
+                                                                            {
+                                                                                "name": "configuration",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "record",
+                                                                                        "name": "RecordDataPropertiesSourceCatalogArrayConfiguration",
+                                                                                        "fields": [
+                                                                                            {
+                                                                                                "name": "attributes",
+                                                                                                "type": {
+                                                                                                    "type": "array",
+                                                                                                    "items": {
+                                                                                                        "type": "record",
+                                                                                                        "name": "RecordAttributes",
+                                                                                                        "fields": [
+                                                                                                            {
+                                                                                                                "name": "attrId",
+                                                                                                                "type": "string",
+                                                                                                                "doc": "Идентификатор столбца"
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                "doc": "Перечень столбцов"
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "logicalOperator",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    "string"
+                                                                                                ],
+                                                                                                "doc": "Логический оператор. Всегда = AND",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "filterGroups",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    {
+                                                                                                        "type": "array",
+                                                                                                        "items": {
+                                                                                                            "type": "record",
+                                                                                                            "name": "RecordDataPropertiesSourceCatalogArrayConfigurationFilterGroups",
+                                                                                                            "fields": [
+                                                                                                                {
+                                                                                                                    "name": "filters",
+                                                                                                                    "type": [
+                                                                                                                        "null",
+                                                                                                                        {
+                                                                                                                            "type": "array",
+                                                                                                                            "items": {
+                                                                                                                                "type": "record",
+                                                                                                                                "name": "RecordDataPropertiesSourceCatalogArrayConfigurationFilterGroupsFilters",
+                                                                                                                                "fields": [
+                                                                                                                                    {
+                                                                                                                                        "name": "attrId",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Идентификатор поля",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "name",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Алиас переменной",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "comparison",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            {
+                                                                                                                                                "type": "enum",
+                                                                                                                                                "name": "EnumDataPropertiesSourceCatalogArrayConfigurationFilterGroupsFiltersComparison",
+                                                                                                                                                "symbols": [
+                                                                                                                                                    "EQUAL",
+                                                                                                                                                    "LESS",
+                                                                                                                                                    "MOREOREQUAL",
+                                                                                                                                                    "MORE",
+                                                                                                                                                    "LESSOREQUAL"
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Условия сравнения",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "type",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            {
+                                                                                                                                                "type": "enum",
+                                                                                                                                                "name": "EnumDataPropertiesSourceCatalogArrayConfigurationFilterGroupsFiltersType",
+                                                                                                                                                "symbols": [
+                                                                                                                                                    "const",
+                                                                                                                                                    "propertyId"
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Тип значения",
+                                                                                                                                        "default": null
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "name": "value",
+                                                                                                                                        "type": [
+                                                                                                                                            "null",
+                                                                                                                                            "string"
+                                                                                                                                        ],
+                                                                                                                                        "doc": "Значение условия",
+                                                                                                                                        "default": null
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ],
+                                                                                                                    "doc": "Группа фильтрации",
+                                                                                                                    "default": null
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "name": "logicalOperator",
+                                                                                                                    "type": [
+                                                                                                                        "null",
+                                                                                                                        "string"
+                                                                                                                    ],
+                                                                                                                    "doc": "Логический оператор. Всегда = OR",
+                                                                                                                    "default": null
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "doc": "Условия фильтрации",
+                                                                                                "default": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "sorting",
+                                                                                                "type": [
+                                                                                                    "null",
+                                                                                                    {
+                                                                                                        "type": "record",
+                                                                                                        "name": "RecordDataPropertiesSourceCatalogArrayConfigurationSorting",
+                                                                                                        "fields": [
+                                                                                                            {
+                                                                                                                "name": "direction",
+                                                                                                                "type": [
+                                                                                                                    "null",
+                                                                                                                    {
+                                                                                                                        "type": "enum",
+                                                                                                                        "name": "EnumDataPropertiesSourceCatalogArrayConfigurationSortingDirection",
+                                                                                                                        "symbols": [
+                                                                                                                            "ASC",
+                                                                                                                            "DESC"
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ],
+                                                                                                                "doc": "Направление сортировки",
+                                                                                                                "default": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "attrId",
+                                                                                                                "type": [
+                                                                                                                    "null",
+                                                                                                                    "string"
+                                                                                                                ],
+                                                                                                                "doc": "Идентификатор поля для сортировки",
+                                                                                                                "default": null
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ],
+                                                                                                "doc": "Сортировка",
+                                                                                                "default": null
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Конфигурация для источника Справочник",
+                                                                                "default": null
+                                                                            },
+                                                                            {
+                                                                                "name": "result",
+                                                                                "type": [
+                                                                                    "null",
+                                                                                    {
+                                                                                        "type": "array",
+                                                                                        "items": {
+                                                                                            "type": "record",
+                                                                                            "name": "RecordDataPropertiesSourceCatalogArrayResult",
+                                                                                            "fields": [
+                                                                                                {
+                                                                                                    "name": "lineId",
+                                                                                                    "type": [
+                                                                                                        "null",
+                                                                                                        "string"
+                                                                                                    ],
+                                                                                                    "doc": "Идентификатор строки справочника",
+                                                                                                    "default": null
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "lineData",
+                                                                                                    "type": [
+                                                                                                        "null",
+                                                                                                        {
+                                                                                                            "type": "array",
+                                                                                                            "items": {
+                                                                                                                "type": "record",
+                                                                                                                "name": "RecordLineData",
+                                                                                                                "fields": [
+                                                                                                                    {
+                                                                                                                        "name": "attrId",
+                                                                                                                        "type": [
+                                                                                                                            "null",
+                                                                                                                            "string"
+                                                                                                                        ],
+                                                                                                                        "doc": "Идентификатор поля справочника",
+                                                                                                                        "default": null
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": "value",
+                                                                                                                        "type": [
+                                                                                                                            "null",
+                                                                                                                            "string"
+                                                                                                                        ],
+                                                                                                                        "doc": "Значение",
+                                                                                                                        "default": null
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "doc": "Сведения о полях и значениях для указанной строки справочника",
+                                                                                                    "default": null
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ],
+                                                                                "doc": "Результаты вычислений",
+                                                                                "default": null
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "doc": "Справочник",
+                                                                "default": null
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "doc": "Конфигурация источника данных",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "hierarchyScope",
+                                                "type": [
+                                                    "null",
+                                                    {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "record",
+                                                            "name": "RecordDataPropertiesHierarchyScope",
+                                                            "fields": [
+                                                                {
+                                                                    "name": "id",
+                                                                    "type": [
+                                                                        "null",
+                                                                        "string"
+                                                                    ],
+                                                                    "doc": "Идентификатор элемента ОПИ",
+                                                                    "default": null
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "doc": "Область применения иерархии (для свойства)",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "propertyPrimitiveId",
+                                                "type": "string",
+                                                "doc": "Идентификатор шаблона свойства"
+                                            },
+                                            {
+                                                "name": "parentId",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Идентификатор родительского свойства",
+                                                "default": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "doc": "Свойства",
+                            "default": null
+                        },
+                        {
+                            "name": "classId",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "doc": "Идентификатор базового класса",
+                            "default": null
+                        },
+                        {
+                            "name": "hierarchyScope",
+                            "type": [
+                                "null",
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "record",
+                                        "name": "RecordDataHierarchyScope",
+                                        "fields": [
+                                            {
+                                                "name": "id",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Идентификатор элемента ОПИ (для объекта)",
+                                                "default": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "doc": "Область применения иерархии (для Объекта)",
+                            "default": null
+                        },
+                        {
+                            "name": "attrSecurity",
+                            "type": [
+                                "null",
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "record",
+                                        "name": "RecordAttrSecurity",
+                                        "fields": [
+                                            {
+                                                "name": "id",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Идентификатор атрибута",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "name",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Наименование атрибута",
+                                                "default": null
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ],
+                                                "doc": "Значение",
+                                                "default": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "doc": "Атрибуты безопасности",
+                            "default": null
+                        }
+                    ]
+                }
+            ],
+            "doc": "Данные",
+            "default": null
+        }
+    ]
+}

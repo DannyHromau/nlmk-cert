@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dummy/nlmk-mes-certification
+    driver-class-name: org.postgresql.Driver
+  cache:
+    caffeine:
+      spec: expireAfterWrite=1s
+
+application:
+  certification:
+    state:
+      marking:
+        attrCodesListOfIntegers: ${MARKING_ATTR_CODES:93, 3565, 6726, 91}
