@@ -7,7 +7,7 @@
     <changeSet author="Daniil Hromau" id="2024-07-19-3">
 
         <!--Атрибуты событий-->
-        <createTable tableName="events" remarks="Атрибуты событий">
+        <createTable tableName="events_attributes" remarks="Атрибуты событий">
             <column name="evenAttrId" type="uuid" remarks="ID записи">
                 <constraints primaryKey="true"/>
             </column>

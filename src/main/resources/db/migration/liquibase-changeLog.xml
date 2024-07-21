@@ -4,5 +4,12 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-
+    <include file="certification/V0001-create-table-users.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0002-create-table-quality_certificate.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0003-create-table-unit_certificate.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0004-create-table-events.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0005-create-table-events_attributes.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0006-create-table-group_attributes.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0007-create-table-unit_attributes.xml" relativeToChangelogFile="true"/>
+    <include file="certification/V0008-create-bridge-tables.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

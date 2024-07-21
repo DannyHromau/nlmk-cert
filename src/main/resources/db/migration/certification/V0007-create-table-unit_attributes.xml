@@ -7,7 +7,7 @@
     <changeSet author="Daniil Hromau" id="2024-07-19-5">
 
         <!--Атрибуты-->
-        <createTable tableName="group_attributes" remarks="Атрибуты">
+        <createTable tableName="unit_attributes" remarks="Атрибуты">
             <column name="attrId" type="uuid" remarks="ID записи">
                 <constraints primaryKey="true"/>
             </column>

@@ -1,7 +1,7 @@
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="Daniil Hromau" id="2024-07-18-2">
@@ -38,10 +38,10 @@
             <column name="orderType" type="UUID" remarks="Идентификатор типа заказа">
                 <constraints nullable="false"/>
             </column>
-            <column name="certQR" type="VARCHAR(255)" remarks="Ключ QR code">
+            <column name="certQR" type="VARCHAR(15)" remarks="Ключ QR code">
                 <constraints nullable="false"/>
             </column>
-            <column name="certQRLink" type="VARCHAR(255)" remarks="Ссылка на QR code">
+            <column name="certQRLink" type="VARCHAR(500)" remarks="Ссылка на QR code">
                 <constraints nullable="false"/>
             </column>
             <column name="cert_form" type="UUID" remarks="Идентификатор бланка сертификата">
