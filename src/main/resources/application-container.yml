@@ -20,8 +20,6 @@ application:
     import:
       listener:
         enabled: ${APPLICATION_OBJECT_MODEL_IMPORT_LISTENER_ENABLED}
-        kafka:
-          topic: ${APPLICATION_OBJECT_MODEL_IMPORT_LISTENER_KAFKA_TOPIC}
   warehouse:
     state:
       marking:
@@ -36,40 +34,6 @@ keycloak:
 springdoc:
   api-docs:
     enabled: ${SPRINGDOC_API_DOCS_ENABLED}
-
-mdm:
-  enabled-mode: ${MDM_ENABLED}
-  nsi:
-    unit-attribute:
-      topic: ${MDM_UNIT_ATTRIBUTE_TOPIC}
-      enabled: ${MDM_UNIT_ATTRIBUTE_ENABLED}
-    warehouse-place:
-      topic: ${MDM_WAREHOUSE_PLACE_TOPIC}
-      enabled: ${MDM_WAREHOUSE_PLACE_ENABLED}
-    operation-type:
-      topic: ${MDM_OPERATION_REFERENCE_TOPIC}
-      enabled: ${MDM_OPERATION_REFERENCE_ENABLED}
-    warehouse-unit-status:
-      topic: ${MDM_WAREHOUSE_UNIT_STATUS_TOPIC}
-      enabled: ${MDM_WAREHOUSE_UNIT_STATUS_ENABLED}
-    unit-type:
-      topic: ${MDM_WAREHOUSE_UNIT_TYPE_TOPIC}
-      enabled: ${MDM_WAREHOUSE_UNIT_TYPE_ENABLED}
-    unit-type-required-attribute:
-      topic: ${MDM_WAREHOUSE_UNIT_TYPE_REQUIRED_ATTRIBUTE_TOPIC}
-      enabled: ${MDM_WAREHOUSE_UNIT_TYPE_REQUIRED_ATTRIBUTE_ENABLED}
-    slot:
-      topic: ${MDM_WAREHOUSE_SLOT_TOPIC}
-      enabled: ${MDM_WAREHOUSE_SLOT_ENABLED}
-
-
-kafka-rest-proxy-settings:
-  url: ${KAFKA_REST_SERVER:http://localhost:8082}
-  username: ${KAFKA_REST_USER:test_user}
-  password: ${KAFKA_REST_PASSWORD:test_password}
-
-kafka-rest-proxy-topics:
-  warehouse-state: ${WAREHOUSE_STATE_TOPIC:000-1.mes-cgp.cdc.stock-in-warehouse-test.0}
 
 server:
   max-http-header-size: ${SERVER_MAX_HTTP_HEADER_SIZE}

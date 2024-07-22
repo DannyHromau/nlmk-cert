@@ -20,7 +20,10 @@
             <column name="certDate" type="DATE" remarks="Дата создания сертификата">
                 <constraints nullable="false"/>
             </column>
-            <column name="workshopCode" type="INTEGER" remarks="Код цеха">
+            <column name="certsSgningDate" type="DATE" remarks="Дата подписания сертификата">
+                <constraints nullable="true"/>
+            </column>
+            <column name="workshopCode" type="UUID" remarks="Код цеха">
                 <constraints nullable="false"/>
             </column>
             <column name="certType" type="UUID" remarks="Идентификатор типа сертификата">
@@ -44,7 +47,7 @@
             <column name="certQRLink" type="VARCHAR(500)" remarks="Ссылка на QR code">
                 <constraints nullable="false"/>
             </column>
-            <column name="cert_form" type="UUID" remarks="Идентификатор бланка сертификата">
+            <column name="certForm" type="UUID" remarks="Идентификатор бланка сертификата">
                 <constraints nullable="false"/>
             </column>
             <column name="statusID" type="UUID" remarks="Идентификатор статуса в справочнике">

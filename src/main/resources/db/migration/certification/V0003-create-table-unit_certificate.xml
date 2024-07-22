@@ -17,32 +17,32 @@
             <column name="heat" type="INTEGER" remarks="Номер плавки.">
                 <constraints nullable="false"/>
             </column>
-            <column name="heat_year" type="INTEGER" remarks="Год плавки.">
+            <column name="heatYear" type="INTEGER" remarks="Год плавки.">
                 <constraints nullable="false"/>
             </column>
             <column name="strand" type="INTEGER" remarks="Номер УНРС.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="slab" type="INTEGER" remarks="Номер сляба.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="hnum" type="INTEGER" remarks="Номер горячекатанной партии.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="hnumYear" type="INTEGER" remarks="Год горячекатанной партии.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="roll" type="INTEGER" remarks="Номер рулона.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="bundle" type="INTEGER" remarks="Номер пачки/бунта.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="tnum" type="INTEGER" remarks="Номер холоднокатанной партии.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="tnumYear" type="INTEGER" remarks="Год холоднокатанной партии.">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
 
