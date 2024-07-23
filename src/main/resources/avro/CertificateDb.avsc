@@ -1,0 +1,599 @@
+{
+  "type": "record",
+  "name": "DbCertificateVer0",
+  "doc": "Передача сертификатов в сервис сертификации",
+  "namespace": "nlmk.XXX",
+  "fields": [
+    {
+      "name": "ts",
+      "type": "string",
+      "doc": "Дата и время передачи данных в формате YYYY-MM-DD\"T\"HH24:MI:SS.FF3+/-HH:MM"
+    },
+    {
+      "name": "op",
+      "type": {
+        "type": "enum",
+        "name": "Operation",
+        "symbols": [
+          "I",
+          "U",
+          "D"
+        ],
+        "doc": "Операция (I - Insert, U - Update, D - Delete)"
+      }
+    },
+    {
+      "name": "pk",
+      "type": {
+        "type": "record",
+        "name": "PkType",
+        "fields": [
+          {
+            "name": "systemCode",
+            "type": "string",
+            "doc": "Код системы источника (поле code из MDM009 Системы)"
+          },
+          {
+            "name": "formationListId",
+            "type": "string",
+            "doc": "Идентификатор формировочной ведомости"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sys",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "SystemMetadata",
+          "fields": [
+            {
+              "name": "seqID",
+              "type": "string",
+              "doc": "Монотонно возрастающий счетчик для проверки или восстановления последовательности"
+            },
+            {
+              "name": "traceID",
+              "type": "string",
+              "doc": "Сквозной TraceID (обычно uuid)"
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "metadata",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "KafkaMetadata",
+          "fields": [
+            {
+              "name": "kafkaKeySchemaID",
+              "type": "int",
+              "doc": "Версия схемы ключа"
+            },
+            {
+              "name": "kafkaValueSchemaID",
+              "type": "int",
+              "doc": "Версия схемы значения"
+            },
+            {
+              "name": "kafkaKey",
+              "type": "string",
+              "doc": "Ключ в Kafka"
+            },
+            {
+              "name": "kafkaPartition",
+              "type": "int",
+              "doc": "Номер партиции"
+            },
+            {
+              "name": "kafkaOffset",
+              "type": "long",
+              "doc": "Offset в Kafka"
+            },
+            {
+              "name": "kafkaTimestamp",
+              "type": "string",
+              "doc": "Дата сообщения в Kafka"
+            },
+            {
+              "name": "kafkaTopic",
+              "type": "string",
+              "doc": "Имя топика"
+            },
+            {
+              "name": "kafkaHeaders",
+              "type": "string",
+              "doc": "Заголовки сообщения"
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "data",
+      "type": {
+        "type": "record",
+        "name": "Data",
+        "fields": [
+          {
+            "name": "formationListNum",
+            "type": "int",
+            "doc": "Номер формировочной ведомости"
+          },
+          {
+            "name": "docType",
+            "type": "int",
+            "doc": "Тип формировочной (1 - Внутренний, 2 - Экспортный, 3 - Внутрироссийская, 4 - Подкат)"
+          },
+          {
+            "name": "formationListDate",
+            "type": "string",
+            "doc": "Дата формировочной ведомости YYYY-MM-DD"
+          },
+          {
+            "name": "regDate",
+            "type": "string",
+            "doc": "Системное время ввода YYYY-MM-DD\"T\"HH24:MI:SS.FF3\"Z\""
+          },
+          {
+            "name": "workshop",
+            "type": {
+              "type": "record",
+              "name": "Workshop",
+              "fields": [
+                {
+                  "name": "num",
+                  "type": "int",
+                  "doc": "Номер цеха"
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "doc": "GUID цеха MDM013 Места"
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "doc": "Наименование цеха MDM013 Места"
+                }
+              ]
+            }
+          },
+          {
+            "name": "accShift",
+            "type": "int",
+            "doc": "Смена"
+          },
+          {
+            "name": "team",
+            "type": "int",
+            "doc": "Бригада"
+          },
+          {
+            "name": "statusCode",
+            "type": [
+              "null",
+              "int"
+            ],
+            "default": null,
+            "doc": "Статус формировочной ведомости"
+          },
+          {
+            "name": "users",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "Users",
+                "fields": [
+                  {
+                    "name": "formingUser",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Бригадир формирования",
+                    "default": null
+                  },
+                  {
+                    "name": "shipmentUser",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Бригадир отгрузки",
+                    "default": null
+                  }
+                ]
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "vehicles",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "Vehicle",
+                "fields": [
+                  {
+                    "name": "vehicleType",
+                    "type": "int",
+                    "doc": "Тип транспортного средства (1- ЖД, 2-Авто)"
+                  },
+                  {
+                    "name": "vehicleNum",
+                    "type": "string",
+                    "doc": "Номер транспортного средства (вагона или автомобиля)"
+                  },
+                  {
+                    "name": "trailerNum",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Номер прицепа",
+                    "default": null
+                  },
+                  {
+                    "name": "wagonTypeId",
+                    "type": [
+                      "null",
+                      "int"
+                    ],
+                    "doc": "Идентификатор типа вагона (wagonTypeId из Справочник род вагонов - ЖД транспорт)",
+                    "default": null
+                  },
+                  {
+                    "name": "wagonTypeName",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Тип вагона (wagonTypeName из Справочник род вагонов - ЖД транспорт)",
+                    "default": null
+                  },
+                  {
+                    "name": "container",
+                    "type": [
+                      "null",
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "record",
+                          "name": "Container",
+                          "fields": [
+                            {
+                              "name": "containerNum",
+                              "type": [
+                                "null",
+                                "string"
+                              ],
+                              "doc": "Номер контейнера",
+                              "default": null
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "stationArrival",
+                    "type": {
+                      "type": "record",
+                      "name": "StationArrival",
+                      "fields": [
+                        {
+                          "name": "catalogId",
+                          "type": "string",
+                          "doc": "Идентификатор справочника станции в MDM"
+                        },
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "doc": "Идентификатор станции назначения"
+                        },
+                        {
+                          "name": "code",
+                          "type": "int",
+                          "doc": "Код станции назначения"
+                        },
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "doc": "Наименование станции назначения"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "orders",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "type": "record",
+                        "name": "Order",
+                        "fields": [
+                          {
+                            "name": "orderNum",
+                            "type": "int",
+                            "doc": "Номер заказа"
+                          },
+                          {
+                            "name": "orderPos",
+                            "type": [
+                              "null",
+                              "int"
+                            ],
+                            "doc": "Позиция заказа",
+                            "default": null
+                          },
+                          {
+                            "name": "metalUnitType",
+                            "type": {
+                              "type": "record",
+                              "name": "MetalUnitType",
+                              "fields": [
+                                {
+                                  "name": "id",
+                                  "type": "string",
+                                  "doc": "Идентификатор типа единицы слежения (guid из справочника MDM017)"
+                                },
+                                {
+                                  "name": "code",
+                                  "type": "int",
+                                  "doc": "Код типа единицы слежения из справочника MDM017"
+                                },
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "doc": "Наименование"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "name": "metalUnits",
+                            "type": {
+                              "type": "array",
+                              "items": {
+                                "type": "record",
+                                "name": "MetalUnit",
+                                "fields": [
+                                  {
+                                    "name": "metalUnitId",
+                                    "type": "string",
+                                    "doc": "Идентификатор металла (пример: 0000220040114091657846071)"
+                                  },
+                                  {
+                                    "name": "marking",
+                                    "type": {
+                                      "type": "record",
+                                      "name": "Marking",
+                                      "fields": [
+                                        {
+                                          "name": "heat",
+                                          "type": "int",
+                                          "doc": "Номер плавки"
+                                        },
+                                        {
+                                          "name": "roll",
+                                          "type": [
+                                            "null",
+                                            "int"
+                                          ],
+                                          "doc": "Номер рулона",
+                                          "default": null
+                                        },
+                                        {
+                                          "name": "bundle",
+                                          "type": [
+                                            "null",
+                                            "int"
+                                          ],
+                                          "doc": "Номер пачки",
+                                          "default": null
+                                        },
+                                        {
+                                          "name": "slab",
+                                          "type": [
+                                            "null",
+                                            "int"
+                                          ],
+                                          "doc": "Номер сляба",
+                                          "default": null
+                                        },
+                                        {
+                                          "name": "strand",
+                                          "type": [
+                                            "null",
+                                            "int"
+                                          ],
+                                          "doc": "Номер УНРС",
+                                          "default": null
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "name": "weightNet",
+                                    "type": "int",
+                                    "doc": "Вес/Масса нетто"
+                                  },
+                                  {
+                                    "name": "weightGross",
+                                    "type": "int",
+                                    "doc": "Вес/Масса брутто"
+                                  },
+                                  {
+                                    "name": "geometry",
+                                    "type": {
+                                      "type": "record",
+                                      "name": "Geometry",
+                                      "fields": [
+                                        {
+                                          "name": "thickness",
+                                          "type": "int",
+                                          "doc": "Толщина"
+                                        },
+                                        {
+                                          "name": "width",
+                                          "type": "int",
+                                          "doc": "Ширина"
+                                        },
+                                        {
+                                          "name": "length",
+                                          "type": "int",
+                                          "doc": "Длина"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "name": "attributes",
+                                    "type": [
+                                      "null",
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "record",
+                                          "name": "Attribute",
+                                          "fields": [
+                                            {
+                                              "name": "regDate",
+                                              "type": "string",
+                                              "doc": "Дата создания значения атрибута (YYYY-MM-DD\"T\"HH24:MI:SS.FF3+/-HH:MM)"
+                                            },
+                                            {
+                                              "name": "id",
+                                              "type": "string",
+                                              "doc": "Идентификатор атрибута в справочнике атрибутов MDM"
+                                            },
+                                            {
+                                              "name": "measureId",
+                                              "type": [
+                                                "null",
+                                                "string"
+                                              ],
+                                              "doc": "Идентификатор единицы измерения",
+                                              "default": null
+                                            },
+                                            {
+                                              "name": "valueString",
+                                              "type": "string",
+                                              "doc": "Значение атрибута c типом string"
+                                            },
+                                            {
+                                              "name": "valueInt",
+                                              "type": "int",
+                                              "doc": "Значение атрибута c типом int"
+                                            },
+                                            {
+                                              "name": "valueLong",
+                                              "type": "long",
+                                              "doc": "Значение атрибута c типом long"
+                                            },
+                                            {
+                                              "name": "valueFloat",
+                                              "type": "float",
+                                              "doc": "Значение атрибута c типом float"
+                                            },
+                                            {
+                                              "name": "valueDouble",
+                                              "type": "double",
+                                              "doc": "Значение атрибута c типом double"
+                                            },
+                                            {
+                                              "name": "valueBoolean",
+                                              "type": "boolean",
+                                              "doc": "Значение атрибута c типом boolean"
+                                            },
+                                            {
+                                              "name": "valueArrayString",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "string",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип string"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueArrayInt",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "int",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип int"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueArrayLong",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "long",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип long"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueArrayFloat",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "float",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип float"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueArrayDouble",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "double",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип double"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueArrayBoolean",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "boolean",
+                                                "doc": "Значение атрибута, представляющее собой коллекцию, где элемент имеет тип boolean"
+                                              }
+                                            },
+                                            {
+                                              "name": "valueType",
+                                              "type": {
+                                                "type": "array",
+                                                "items": "string",
+                                                "doc": "Название типа значения атрибута"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    "default": null
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
