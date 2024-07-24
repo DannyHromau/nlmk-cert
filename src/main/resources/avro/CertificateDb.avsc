@@ -63,7 +63,7 @@
           ]
         }
       ],
-      "doc": "Системные поля, заполняемые источником"
+      "doc": "Системные поля, заполняемые источником",
       "default": null
     },
     {
@@ -182,45 +182,6 @@
             "doc": "Номер заказа"
           },
           {
-            "name": "orderNum",
-            "type": "int",
-            "doc": "Номер заказа"
-          },
-          {
-            "name": "workshop",
-            "type": {
-              "type": "record",
-              "name": "Workshop",
-              "fields": [
-                {
-                  "name": "num",
-                  "type": "int",
-                  "doc": "Номер цеха"
-                },
-                {
-                  "name": "id",
-                  "type": "string",
-                  "doc": "GUID цеха MDM013 Места"
-                },
-                {
-                  "name": "name",
-                  "type": "string",
-                  "doc": "Наименование цеха MDM013 Места"
-                }
-              ]
-            }
-          },
-          {
-            "name": "accShift",
-            "type": "int",
-            "doc": "Смена"
-          },
-          {
-            "name": "orderNum",
-            "type": "int",
-            "doc": "Номер заказа"
-          },
-          {
             "name": "orderPos",
             "type": "int",
             "doc": "Позиция заказа"
@@ -228,26 +189,26 @@
           {
             "name": "vehicle",
             "type": {
-               "type": "record",
-               "name": "Vehicle",
-               "fields": [
-              {
-                "name": "vehicleType",
-                "type": "int",
-                "doc": "Тип транспортного средства (1- ЖД, 2-Авто)"
-              },
-              {
-                "name": "vehicleNum",
-                "type": "string",
-                "doc": "Номер транспортного средства (вагона или автомобиля)"
-              },
-              {
-                "name": "trailerNum",
-                "type": "string",
-                "doc": "Номер прицепа"
-              }
-             ]
-           }
+              "type": "record",
+              "name": "Vehicle",
+              "fields": [
+                {
+                  "name": "vehicleType",
+                  "type": "int",
+                  "doc": "Тип транспортного средства (1- ЖД, 2-Авто)"
+                },
+                {
+                  "name": "vehicleNum",
+                  "type": "string",
+                  "doc": "Номер транспортного средства (вагона или автомобиля)"
+                },
+                {
+                  "name": "trailerNum",
+                  "type": "string",
+                  "doc": "Номер прицепа"
+                }
+              ]
+            }
           },
           {
             "name": "certQR",
@@ -257,13 +218,155 @@
           {
             "name": "attrCert",
             "type": {
-                "type": "array",
-                "items": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "AttrCert",
+                "fields": [
+                  {
+                    "name": "specСode",
+                    "type": "int",
+                    "doc": "Код характеристики"
+                  },
+                  {
+                    "name": "specName",
+                    "type": "string",
+                    "doc": "Наименование характеристики"
+                  },
+                  {
+                    "name": "specTypeCode",
+                    "type": "int",
+                    "doc": "Тип данных"
+                  },
+                  {
+                    "name": "specTypeName",
+                    "type": "string",
+                    "doc": "Наименование типов данных"
+                  },
+                  {
+                    "name": "specTypeValue",
+                    "type": "int",
+                    "doc": "Тип значения (1 -простое, 2 - перечислимое)"
+                  },
+                  {
+                    "name": "specValue",
+                    "type": "string",
+                    "doc": "Значение"
+                  },
+                  {
+                    "name": "listValues",
+                    "type": {
+                      "type": "array",
+                      "items": {
                         "type": "record",
-                        "name": "AttrCert",
+                        "name": "ListValues",
                         "fields": [
                           {
-                            "name": "specСode",
+                            "name": "value",
+                            "type": "string",
+                            "doc": "Значение"
+                          },
+                          {
+                            "name": "description",
+                            "type": "string",
+                            "doc": "Описание справочного значения"
+                          }
+                        ]
+                      }
+                    },
+                    "doc": "Список значений"
+                  },
+                  {
+                    "name": "specDecryption",
+                    "type": "string",
+                    "doc": "Расшифровка справочного значение"
+                  },
+                  {
+                    "name": "specFormat",
+                    "type": "string",
+                    "doc": "Формат передачи характеристики"
+                  },
+                  {
+                    "name": "specMeasure",
+                    "type": "string",
+                    "doc": "Единица измерения"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "metalUnits",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "MetalUnits",
+                "fields": [
+                  {
+                    "name": "Id",
+                    "type": "string",
+                    "doc": "Идентификатор (ИД) единицы ЕМ Prime ID системы отправителя (Пример: 000002200401140911657846071)"
+                  },
+                  {
+                    "name": "lineId",
+                    "type": "int",
+                    "doc": "Номер строки сертификата"
+                  },
+                  {
+                    "name": "marking",
+                    "type": {
+                      "type": "record",
+                      "name": "Marking",
+                      "fields": [
+                        {
+                          "name": "heat",
+                          "type": "int",
+                          "doc": "Номер плавки"
+                        },
+                        {
+                          "name": "slab",
+                          "type": "int",
+                          "doc": "Номер сляба"
+                        },
+                        {
+                          "name": "strand",
+                          "type": "int",
+                          "doc": "Номер УНРС"
+                        },
+                        {
+                          "name": "hnum",
+                          "type": "int",
+                          "doc": "Номер ГК партии"
+                        },
+                        {
+                          "name": "roll",
+                          "type": "int",
+                          "doc": "Номер рулона"
+                        },
+                        {
+                          "name": "bundle",
+                          "type": "int",
+                          "doc": "Номер пачки"
+                        },
+                        {
+                          "name": "tnum",
+                          "type": "int",
+                          "doc": "Номер ХК партии"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "specifications",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "type": "record",
+                        "name": "Specifications",
+                        "fields": [
+                          {
+                            "name": "specCode",
                             "type": "int",
                             "doc": "Код характеристики"
                           },
@@ -280,7 +383,7 @@
                           {
                             "name": "specTypeName",
                             "type": "string",
-                            "doc": "Наименование типов данных"
+                            "doc": "Наименование типа данных"
                           },
                           {
                             "name": "specTypeValue",
@@ -293,12 +396,12 @@
                             "doc": "Значение"
                           },
                           {
-                            "name": "listValues",
+                            "name": "listValuesSpec",
                             "type": {
                               "type": "array",
                               "items": {
                                 "type": "record",
-                                "name": "ListValues",
+                                "name": "ListValuesSpec",
                                 "fields": [
                                   {
                                     "name": "value",
@@ -312,8 +415,7 @@
                                   }
                                 ]
                               }
-                             },
-                              "doc": "Список значений"
+                            }
                           },
                           {
                             "name": "specDecryption",
@@ -329,136 +431,12 @@
                             "name": "specMeasure",
                             "type": "string",
                             "doc": "Единица измерения"
-                          },
-                          {
-                            "name": "specMeasure",
-                            "type": "string",
-                            "doc": "Единица измерения"
                           }
                         ]
-                }
-            }
-          },
-          {
-            "name": "metalUnits",
-            "type": {
-              "type": "array",
-              "items": {
-                 "type": "record",
-                 "name": "MetalUnits",
-                 "fields": [
-                        {
-                         "id": "Id",
-                         "type": "string",
-                         "doc": "Идентификатор (ИД) единицы ЕМ Prime ID системы отправителя (Пример: 000002200401140911657846071)"
-                        },
-                        {
-                         "name": "lineId",
-                         "type": "int",
-                         "doc": "Номер строки сертификата"
-                        },
-                        {
-                          "name": "marking",
-                          "type": {
-                            "type": "record",
-                            "name": "Marking",
-                            "fields": [
-                              {
-                               "name": "heat",
-                               "type": "int",
-                               "doc": "Номер плавки"
-                              },
-                              {
-                               "name": "slab",
-                               "type": "int",
-                               "doc": "Номер сляба"
-                              },
-                              {
-                               "name": "strand",
-                               "type": "int",
-                               "doc": "Номер УНРС"
-                              },
-                              {
-                               "name": "hnum",
-                               "type": "int",
-                               "doc": "Номер ГК партии"
-                              },
-                              {
-                               "name": "roll",
-                               "type": "int",
-                               "doc": "Номер рулона"
-                              },
-                              {
-                               "name": "bundle",
-                               "type": "int",
-                               "doc": "Номер пачки"
-                              },
-                              {
-                               "name": "tnum",
-                               "type": "int",
-                               "doc": "Номер ХК партии"
-                              }
-                            ]
-                          }
-                        },
-                        {
-                          "name": "specifications",
-                          "type": {
-                            "type": "array",
-                            "items": {
-                               "type": "record",
-                               "name": "Specifications",
-                               "fields": [
-                                  {
-                                   "name": "specCode",
-                                   "type": "int",
-                                   "doc": "Код характеристики"
-                                  },
-                                  {
-                                   "name": "specName",
-                                   "type": "string",
-                                   "doc": "Наименование характеристики"
-                                  },
-                                  {
-                                   "name": "specTypeCode",
-                                   "type": "int",
-                                   "doc": "Тип данных"
-                                  },
-                                  {
-                                   "name": "specTypeName",
-                                   "type": "string",
-                                   "doc": "Наименование типа данных"
-                                  },
-                                  {
-                                   "name": "specTypeValue",
-                                   "type": "int",
-                                   "doc": "Тип значения (1 -простое, 2 - перечислимое)"
-                                  },
-                                  {
-                                   "name": "specValue",
-                                   "type": "string",
-                                   "doc": "Значение"
-                                  },
-                                  {
-                                   "name": "specDecryption",
-                                   "type": "string",
-                                   "doc": "Расшифровка справочного значение"
-                                  },
-                                  {
-                                   "name": "specFormat",
-                                   "type": "string",
-                                   "doc": "Формат передачи характеристики"
-                                  },
-                                  {
-                                   "name": "specMeasure",
-                                   "type": "string",
-                                   "doc": "Единица измерения"
-                                  }
-                               ]
-                            }
-                          }
-                        }
-                 ]
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
